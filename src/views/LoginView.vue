@@ -58,7 +58,7 @@ export default {
         // } else {
         //     alert('Credenciais inválidas');
         // }
-        this.$router.push('/teste');
+        this.$router.push('/visao-geral');
     },
   },
 };
