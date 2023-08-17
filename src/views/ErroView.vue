@@ -8,10 +8,20 @@
                     </div>
                     <div class="card-body" style="text-align: center;">
                         <h6 class="text-trigramas mb-5">Página não encontrada!</h6>
-                        <button class="btn btn-dark w-100">Voltar</button>
+                        <button class="btn btn-dark w-100" @click="voltar()">Voltar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    voltar() {
+        this.$router.push('/visao-geral');
+    },
+  },
+};
+</script>
