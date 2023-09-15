@@ -9,6 +9,7 @@ import LoginView from '../views/LoginView.vue'
 import ErroView from '../views/ErroView.vue'
 import VisaoGeralView from '../views/VisaoGeralView.vue'
 import RegioesView from '../views/RegioesView.vue'
+import EstadosView from '../views/EstadosView.vue'
 import MonitoradosView from '../views/MonitoradosView.vue'
 import ConfiguracoesView from '../views/ConfiguracoesView.vue'
 
@@ -45,6 +46,14 @@ const router = createRouter({
       component: InternoLayout,
       children: [
         { path: '', component: RegioesView },
+      ],
+    },    
+    {
+      path: '/regioes/estados',
+      name: 'Estados',
+      component: InternoLayout,
+      children: [
+        { path: '', component: EstadosView },
       ],
     },    
     {
