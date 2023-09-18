@@ -10,6 +10,9 @@ import ErroView from '../views/ErroView.vue'
 import VisaoGeralView from '../views/VisaoGeralView.vue'
 import RegioesView from '../views/RegioesView.vue'
 import EstadosView from '../views/EstadosView.vue'
+import MunicipiosView from '../views/MunicipiosView.vue'
+import PacientesView from '../views/PacientesView.vue'
+import PessoaView from '../views/PessoaView.vue'
 import MonitoradosView from '../views/MonitoradosView.vue'
 import ConfiguracoesView from '../views/ConfiguracoesView.vue'
 
@@ -40,22 +43,43 @@ const router = createRouter({
         { path: '', component: VisaoGeralView },
       ],
     },
+    // # REGIOES
     {
       path: '/regioes',
-      name: 'Regiões',
       component: InternoLayout,
       children: [
         { path: '', component: RegioesView },
       ],
     },    
     {
-      path: '/regioes/estados',
-      name: 'Estados',
+      path: '/regioes/:regiao',
       component: InternoLayout,
       children: [
         { path: '', component: EstadosView },
       ],
-    },    
+    }, 
+    {
+      path: '/regioes/:regiao/:estado',
+      component: InternoLayout,
+      children: [
+        { path: '', component: MunicipiosView },
+      ],
+    }, 
+    {
+      path: '/regioes/:regiao/:estado/:municipio',
+      component: InternoLayout,
+      children: [
+        { path: '', component: PacientesView },
+      ],
+    },   
+    {
+      path: '/regioes/:regiao/:estado/:municipio/:pessoa',
+      component: InternoLayout,
+      children: [
+        { path: '', component: PessoaView },
+      ],
+    },  
+    // ### REGIOES
     {
       path: '/monitorados',
       name: 'Monitorados',

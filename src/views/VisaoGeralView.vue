@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
@@ -13,20 +12,33 @@ import { ref, onMounted } from 'vue';
 import L from 'leaflet';
 import 'leaflet.markercluster';
 
-export default {
-  name: 'Map',
-  setup() {
-    const map = ref(null);
+import axios from 'axios';
 
-    onMounted(() => {
-      map.value = L.map('map').setView([51.505, -0.09], 13);
+export default {
+  name: 'LoginView',
+  mounted () {
+    const map = ref(null);
+    this.carregarMapa();
+    this.marcarNoMapa();
+    // this.teste();
+  },
+  data() {
+    return {
+      email: '',
+      senha: '',
+      permanecer_conectado: false,
+    };
+  },
+  methods: {
+    carregarMapa(){
+      map.value = L.map('map').setView([-13.7472116,-55.5525641], 4);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap contributors'
       }).addTo(map.value);
-
-      // L.marker([51.505, -0.09]).addTo(map.value);
+    },
+    marcarNoMapa(){
 
       const markers = L.markerClusterGroup();
 
@@ -37,11 +49,19 @@ export default {
       markers.addLayer(marker2);
 
       map.value.addLayer(markers);
-    });
-    
-    return {
-      map,
-    };
-  }
+    },
+    teste(){
+      axios
+      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .then(response => {
+        console.log("OPAAA: ", response.data);
+      })
+      .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading = false)
+    }
+  },
 };
 </script>
