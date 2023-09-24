@@ -14,23 +14,14 @@
                         <!-- <form @submit.prevent="entrar"> -->
                             <div class="form-group mb-3">
                                 <label for="email" class="text-trigramas">E-mail</label>
-                                <input v-model="email" type="text" class="form-control" id="email" placeholder="Digite seu e-mail">
+                                <input v-model="acesso.login" type="text" class="form-control" id="email" placeholder="Digite seu e-mail">
                             </div>
                             <div class="form-group mb-1">
                                 <label for="senha" class="text-trigramas">Senha</label>
-                                <input v-model="senha" type="password" class="form-control" id="senha" placeholder="Digite sua senha">
-                            </div>
-                            <div class="form-check mb-3">
-                                <input v-model="permanecer_conectado" class="form-check-input" type="checkbox" value="" id="permanecer-conectado">
-                                <label class="form-check-label text-trigramas" for="permanecer-conectado">
-                                    Permanecer conectado
-                                </label>
+                                <input v-model="acesso.senha" type="password" class="form-control" id="senha" placeholder="Digite sua senha">
                             </div>
                         <!-- </form> -->
                         <button class="btn btn-dark shadow w-100 mb-3" type="button" @click="entrar()">Entrar</button>
-                        <div class="d-flex justify-content-center">
-                            <a href="#">Esqueci minha senha</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -42,23 +33,33 @@
 </template>
 
 <script>
+import store from '../../store';
+
+import axios from 'axios';
+
 export default {
   name: 'LoginView',
   data() {
     return {
-      email: '',
-      senha: '',
-      permanecer_conectado: false,
+        acesso:{
+            login:null,
+            senha:null
+        }
     };
   },
   methods: {
     entrar() {
-        // if (this.email === 'admin@trigramas.com' && this.senha === '1234') {
-        //     this.$emit('login-success'); // Emitir um evento de login bem-sucedido
-        // } else {
-        //     alert('Credenciais inválidas');
-        // }
-        this.$router.push('/visao-geral');
+      axios
+      .post('http://localhost:8081/login',this.acesso)
+      .then(response => {
+        console.log("opa:", response.data);
+      })
+      .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading = false)
+        console.log(store.getters.getToken);
     },
   },
 };
