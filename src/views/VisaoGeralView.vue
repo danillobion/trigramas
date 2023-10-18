@@ -20,7 +20,6 @@ export default {
     const map = ref(null);
     this.carregarMapa();
     this.marcarNoMapa();
-    this.teste();
   },
   data() {
     return {
@@ -41,31 +40,49 @@ export default {
     marcarNoMapa(){
 
       const markers = L.markerClusterGroup();
-
-      const marker1 = L.marker([51.505, -0.09]);
-      const marker2 = L.marker([51.55, -0.12]);
-
-      markers.addLayer(marker1);
-      markers.addLayer(marker2);
-
-      map.value.addLayer(markers);
-    },
-    teste(){
       const token = localStorage.getItem('token');
-      console.log("token salvo", token);
 
       axios
       .get('http://localhost:8081/visao-geral/casos', { 
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        console.log("reponse data: ", response.data);
+        if(response.data.casos.length>0){
+          response.data.casos.map(e=>{
+            let marker = L.marker([e.endereco.coordenadas.latitude,e.endereco.coordenadas.longitude]);
+            marker.bindPopup(this.popup(e));
+            markers.addLayer(marker);
+            map.value.addLayer(markers);
+          });
+        }
       })
       .catch(error => {
         console.log(error);
       })
       .finally(() => {
       });
+    },
+    popup(data){
+      return `
+        <div class="form-group mt-4 mb-4" style="width:250px">
+          <div class="d-flex justify-content-between mb-2">
+            <h6 style="font-weight:bold">${data.nome}</h6>
+          </div>
+          <div class="d-flex justify-content-between">
+            <h6 style="font-size:12.5px">Idade</h6>
+            <h6 style="font-size:12.5px">${data.idade} anos</h6>
+          </div>
+          <div class="d-flex justify-content-between">
+            <h6 style="font-size:12.5px">Sexo</h6>
+            <h6 style="font-size:12.5px">${data.sexo}</h6>
+          </div>
+          <div class="d-flex justify-content-between">
+            <h6 style="font-size:12.5px">Nº de infecções</h6>
+            <h6 style="font-size:12.5px">${data.numero_infeccoes}</h6>
+          </div>
+          <button class="btn btn-sm btn-light w-100">Ver perfil</button>
+        </div>
+      `;
     }
   },
 };
