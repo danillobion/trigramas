@@ -20,7 +20,7 @@ export default {
     const map = ref(null);
     this.carregarMapa();
     this.marcarNoMapa();
-    // this.teste();
+    this.teste();
   },
   data() {
     return {
@@ -51,16 +51,21 @@ export default {
       map.value.addLayer(markers);
     },
     teste(){
+      const token = localStorage.getItem('token');
+      console.log("token salvo", token);
+
       axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .get('http://localhost:8081/visao-geral/casos', { 
+        headers: { Authorization: `Bearer ${token}` }
+      })
       .then(response => {
-        console.log("OPAAA: ", response.data);
+        console.log("reponse data: ", response.data);
       })
       .catch(error => {
-        console.log(error)
-        this.errored = true
+        console.log(error);
       })
-      .finally(() => this.loading = false)
+      .finally(() => {
+      });
     }
   },
 };

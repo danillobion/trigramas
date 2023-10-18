@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import store from '../../store';
-
 import axios from 'axios';
 
 export default {
@@ -52,14 +50,19 @@ export default {
       axios
       .post('http://localhost:8081/login',this.acesso)
       .then(response => {
-        console.log("opa:", response.data);
+        const token = response.data.token;
+        if(token){
+            this.$router.push('/visao-geral');
+            localStorage.setItem('token', token);
+        }
       })
       .catch(error => {
-        console.log(error)
+        console.log("opa", error)
         this.errored = true
       })
       .finally(() => this.loading = false)
-        console.log(store.getters.getToken);
+        localStorage.removeItem('token');
+        this.$router.push('/');
     },
   },
 };

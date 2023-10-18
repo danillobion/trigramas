@@ -42,6 +42,15 @@ const router = createRouter({
       children: [
         { path: '', component: VisaoGeralView },
       ],
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     },
     // # REGIOES
     {
@@ -50,6 +59,15 @@ const router = createRouter({
       children: [
         { path: '', component: RegioesView },
       ],
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     },    
     {
       path: '/regioes/:regiao',
@@ -57,6 +75,15 @@ const router = createRouter({
       children: [
         { path: '', component: EstadosView },
       ],
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     }, 
     {
       path: '/regioes/:regiao/:estado',
@@ -64,6 +91,15 @@ const router = createRouter({
       children: [
         { path: '', component: MunicipiosView },
       ],
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     }, 
     {
       path: '/regioes/:regiao/:estado/:municipio',
@@ -71,6 +107,15 @@ const router = createRouter({
       children: [
         { path: '', component: PacientesView },
       ],
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     },   
     {
       path: '/regioes/:regiao/:estado/:municipio/:pessoa',
@@ -78,6 +123,15 @@ const router = createRouter({
       children: [
         { path: '', component: PessoaView },
       ],
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     },  
     // ### REGIOES
     {
@@ -87,6 +141,15 @@ const router = createRouter({
       children: [
         { path: '', component: MonitoradosView },
       ],
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     },    
     {
       path: '/configuracoes',
@@ -95,6 +158,15 @@ const router = createRouter({
       children: [
         { path: '', component: ConfiguracoesView },
       ],
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     },
   ]
 })
