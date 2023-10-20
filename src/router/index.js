@@ -19,6 +19,7 @@ import ConfiguracoesView from '../views/ConfiguracoesView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // # LOGIN
     {
       path: '/',
       name: 'Login',
@@ -26,7 +27,17 @@ const router = createRouter({
       children: [
         { path: '', component: LoginView },
       ],
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+
+        if (token != null) {
+          next('/visao-geral');
+        } else {
+          next();
+        }
+      },
     },
+    // # PAGINA NÃO ENCONTRADA
     {
       path: '/:pathMatch(.*)*',
       name: 'Erro',
@@ -35,6 +46,7 @@ const router = createRouter({
         { path: '', component: ErroView },
       ],
     },
+    // # VISÃO GERAL
     {
       path: '/visao-geral',
       name: 'Visão geral',
@@ -45,7 +57,7 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token');
 
-        if (token) {
+        if (token != null) {
           next();
         } else {
           next('/');
@@ -62,15 +74,16 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token');
 
-        if (token) {
+        if (token != null) {
           next();
         } else {
           next('/');
         }
       },
     },    
+    // # ESTADOS
     {
-      path: '/regioes/:regiao',
+      path: '/regioes/:id',
       component: InternoLayout,
       children: [
         { path: '', component: EstadosView },
@@ -78,15 +91,16 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token');
 
-        if (token) {
+        if (token != null) {
           next();
         } else {
           next('/');
         }
       },
     }, 
+    // # MUNICIPIOS
     {
-      path: '/regioes/:regiao/:estado',
+      path: '/regioes/estados/:id',
       component: InternoLayout,
       children: [
         { path: '', component: MunicipiosView },
@@ -94,15 +108,16 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token');
 
-        if (token) {
+        if (token != null) {
           next();
         } else {
           next('/');
         }
       },
     }, 
+    // # PACIENTES
     {
-      path: '/regioes/:regiao/:estado/:municipio',
+      path: '/regioes/estados/municipios/pacientes/:id',
       component: InternoLayout,
       children: [
         { path: '', component: PacientesView },
@@ -110,7 +125,7 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token');
 
-        if (token) {
+        if (token != null) {
           next();
         } else {
           next('/');
@@ -118,7 +133,7 @@ const router = createRouter({
       },
     },   
     {
-      path: '/regioes/:regiao/:estado/:municipio/:pessoa',
+      path: '/regioes/estados/municipios/pacientes/pessoa/:id',
       component: InternoLayout,
       children: [
         { path: '', component: PessoaView },
@@ -126,7 +141,7 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token');
 
-        if (token) {
+        if (token != null) {
           next();
         } else {
           next('/');
@@ -144,7 +159,7 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token');
 
-        if (token) {
+        if (token != null) {
           next();
         } else {
           next('/');
@@ -161,7 +176,7 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token');
 
-        if (token) {
+        if (token != null) {
           next();
         } else {
           next('/');

@@ -2,9 +2,9 @@
     <div class="container mt-3">
         <div class="mt-4 w-100 d-flex">
             <router-link :to="`/regioes/${$route.params.regiao}/${$route.params.estado}/${$route.params.municipio}`" class="btn btn-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/> </svg></router-link>
-            <h2 style="margin: 0px;">{{ $route.params.pessoa }}</h2>
+            <h2 style="margin: 0px;">{{ dados.nome}}</h2>
         </div>
-        <span style="margin-left: 44px; color: #9c9c9c;">Regiões/{{ $route.params.regiao }}/{{ $route.params.estado }}/{{ $route.params.municipio }}/{{ $route.params.pessoa }}</span>
+        <span style="margin-left: 44px; color: #9c9c9c;">Regiões/{{ dados.regiao }}/{{ dados.estado }}/{{ dados.municipio }}/{{ dados.nome }}</span>
         <div class="row px-5 mt-3">
             <div class="col-sm-12 col-md-4 mb-1">
                 <div class=" card shadow" style="height: 100%;">
@@ -13,37 +13,20 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h6 class="card-text-trigramas">Código</h6>
-                            <h6 class="card-text-trigramas">0000000000001</h6>
-                        </div>
-                        <div class="d-flex justify-content-between">
                             <h6 class="card-text-trigramas">Idade</h6>
-                            <h6 class="card-text-trigramas">43</h6>
+                            <h6 class="card-text-trigramas">{{ dados.idade }} anos</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="card-text-trigramas">Sexo</h6>
-                            <h6 class="card-text-trigramas">Feminino</h6>
+                            <h6 class="card-text-trigramas">{{ dados.sexo }}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="card-text-trigramas">Telefone</h6>
-                            <h6 class="card-text-trigramas">(81) 3361-1234</h6>
+                            <h6 class="card-text-trigramas">{{ dados.telefone }}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h6 class="card-text-trigramas">Endereço</h6>
-                            <h6 class="card-text-trigramas">Rua José Lourenço</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4 mb-1">
-                <div class=" card shadow" style="height: 100%;">
-                    <div class="card-header">
-                        <h5 style="margin: 0px;">Alergias</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="card-text-trigramas">Alimento</h6>
-                            <h6 class="card-text-trigramas">Leite</h6>
+                            <h6 class="card-text-trigramas">Cidade</h6>
+                            <h6 class="card-text-trigramas">{{ dados.endereco.cidade }}</h6>
                         </div>
                     </div>
                 </div>
@@ -51,12 +34,24 @@
             <div class="col-sm-12 col-md-4 mb-1">
                 <div class=" card shadow" style="height: 100%;">
                     <div class="card-header">
-                        <h5 style="margin: 0px;">Medicamentos</h5>
+                        <h5 style="margin: 0px;">Nível de deficiência</h5>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="card-text-trigramas">Versa</h6>
-                            <h6 class="card-text-trigramas">40mg oral</h6>
+                        <div v-for="nivel in dados.nivel_de_deficiencia" :key="nivel.id" class="d-flex justify-content-between">
+                            <h6 class="card-text-trigramas">{{ nivel.nome }}</h6>
+                            <h6 class="card-text-trigramas">{{ nivel.valor }}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <div class=" card shadow" style="height: 100%;">
+                    <div class="card-header">
+                        <h5 style="margin: 0px;">Planos de Tratamento</h5>
+                    </div>
+                    <div class="card-body">
+                        <div  v-for="plano in dados.ultimos_planos_tratamento" :key="plano.id" class="d-flex justify-content-between">
+                            <h6 class="card-text-trigramas">{{ plano.tratamento }}</h6>
                         </div>
                     </div>
                 </div>
@@ -65,10 +60,10 @@
                 <div class="d-flex justify-content-between">
                     <h3 v-if="historico == 'linhaDoTempo'">Histórico</h3>
                     <h3 v-else>Trigramas</h3>
-                    <div>
+                    <!-- <div>
                         <button class="btn btn-light" type="button" @click="alterarHistorico('linhaDoTempo')" style="margin-right: 5px;">Histórico</button>
                         <button class="btn btn-light" type="button" @click="alterarHistorico('trigramas')">Trigramas</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="table-responsive-sm mt-3" v-if="historico == 'linhaDoTempo'">
@@ -83,26 +78,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>19/09/2023</td>
-                        <td>Enfermeiro</td>
-                        <td>Exame</td>
-                        <td>Calafrio</td>
-                        <td>Negativo</td>
-                    </tr>
-                    <tr>
-                        <td>18/09/2023</td>
-                        <td>Enfermeiro</td>
-                        <td>Exame</td>
-                        <td>Calafrio, febre e sudorese</td>
-                        <td>Malária - Tipo: I</td>
-                    </tr>
-                    <tr>
-                        <td>15/09/2023</td>
-                        <td>Saúde</td>
-                        <td>Cadastro no sistema</td>
-                        <td>-</td>
-                        <td>-</td>
+                    <tr v-for="info in dados.historico" :key="info.id">
+                        <td>{{ info.data }}</td>
+                        <td>{{ info.unidade_saude }}</td>
+                        <td>{{ info.procedimento }}</td>
+                        <td>{{ info.sintomas }}</td>
+                        <td>{{ info.tipo }}</td>
                     </tr>
                 </tbody>
                 </table>
@@ -117,21 +98,92 @@
 </template>
 
 <script>
-
 import axios from 'axios';
-
 export default {
-  name: 'LoginView',
   mounted () {
+    this.carregarDadosPessoa();
   },
   data() {
     return {
-        historico:'linhaDoTempo'
+        historico:"linhaDoTempo",
+        dados:{
+            "id": 0,
+            "nome": "Fulano de Tal",
+            "sexo": "Masculino",
+            "idade": 0,
+            "data_cadastro": "01/01/1999",
+            "numero_infeccoes": 0,
+            "data_diagnostico": "01/01/1999",
+            "Telefone": "99 99999-9999",
+            "endereco": {
+                "estado": "Exemplo",
+                "cidade": "Exemplo",
+                "coordenadas": {
+                    "latitude": 0,
+                    "longitude": 0
+                }
+            },
+            "nivel_de_deficiencia": [
+                {
+                    "id": 1,
+                    "nome": "Exemplo",
+                    "valor": 1,
+                },
+                {
+                    "id": 2,
+                    "nome": "Exemplo",
+                    "valor": 1,
+                }
+            ],
+            "ultimos_planos_tratamento": [
+                {
+                    "id": 1,
+                    "tratamento": "Exemplo"
+                },
+                {
+                    "id": 2,
+                    "tratamento": "Exemplo"
+                }
+            ],
+            "historico": [
+                {
+                    "id": 1,
+                    "data": "01/01/1999",
+                    "unidade_saude": "Exemplo",
+                    "procedimento": "Exemplo",
+                    "sintomas": "Exemplo",
+                    "tipo": "Exemplo",
+                },
+                {
+                    "id": 2,
+                    "data": "01/01/1999",
+                    "unidade_saude": "Exemplo",
+                    "procedimento": "Exemplo",
+                    "sintomas": "Exemplo",
+                    "tipo": "Exemplo",
+                }
+            ]
+        },
     };
   },
   methods: {
-    alterarHistorico(acao){
-        this.historico = acao == "linhaDoTempo" ? "linhaDoTempo" : "trigramas";
+    carregarDadosPessoa(){
+        const token = localStorage.getItem('token');
+
+        axios
+        .get('http://localhost:8081/casos/pessoa/1', { 
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(response => {
+            this.dados = response.data;
+            console.log("opa",this.dados.nome);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        .finally(() => {
+        });
+
     }
   },
 };

@@ -10,47 +10,54 @@
                 <tr>
                 <th scope="col">Nome</th>
                 <th scope="col">Casos</th>
-                <th scope="col">Monitorados</th>
+                <th scope="col">Recorrências</th>
+                <th scope="col">Óbitos</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <RouterLink  aria-current="page" to="/regioes/Centro-Oeste" style="text-decoration: none;">Centro-Oeste</RouterLink>
+                <tr v-for="regiao in regioes">
+                    <td class="w-25">
+                        <RouterLink  aria-current="page" :to="'/regioes/' + regiao.id" style="text-decoration: none;">{{ regiao.nome }}</RouterLink>
                     </td>
-                    <td>3.245</td>
-                    <td>245</td>
-                </tr>
-                <tr>
-                    <td>
-                        <RouterLink  aria-current="page" to="/regioes/Norte" style="text-decoration: none;">Norte</RouterLink>
-                    </td>
-                    <td>3.245</td>
-                    <td>245</td>
-                </tr>
-                <tr>
-                    <td>
-                        <RouterLink  aria-current="page" to="/regioes/Nordeste" style="text-decoration: none;">Nordeste</RouterLink>
-                    </td>
-                    <td>3.245</td>
-                    <td>245</td>
-                </tr>
-                <tr>
-                    <td>
-                        <RouterLink  aria-current="page" to="/regioes/Sudeste" style="text-decoration: none;">Sudeste</RouterLink>
-                    </td>
-                    <td>3.245</td>
-                    <td>245</td>
-                </tr>
-                <tr>
-                    <td>
-                        <RouterLink  aria-current="page" to="/regioes/Sul" style="text-decoration: none;">Sul</RouterLink>
-                    </td>
-                    <td>3.245</td>
-                    <td>245</td>
+                    <td class="w-25">{{ regiao.casos }}</td>
+                    <td class="w-25">{{ regiao.recorrencias }}</td>
+                    <td class="w-25">{{ regiao.obitos }}</td>
                 </tr>
             </tbody>
             </table>
         </div>
     </div>
 </template>
+
+<script>
+import axios from 'axios';
+export default {
+  mounted () {
+    this.carregarRegioes();
+  },
+  data() {
+    return {
+        regioes:null,
+    };
+  },
+  methods: {
+    carregarRegioes(){
+        const token = localStorage.getItem('token');
+
+        axios
+        .get('http://localhost:8081/regioes', { 
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(response => {
+            this.regioes = response.data.regioes;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        .finally(() => {
+        });
+
+    }
+  },
+};
+</script>
