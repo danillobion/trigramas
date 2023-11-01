@@ -21,14 +21,14 @@
                                 <input v-model="acesso.senha" type="password" class="form-control" id="senha" placeholder="Digite sua senha">
                             </div>
                         <!-- </form> -->
-                        <button class="btn btn-dark shadow w-100 mb-3" type="button" @click="entrar()">Entrar</button>
+                        <button class="btn btn-dark shadow w-100 mt-4 mb-3" type="button" @click="entrar()">Entrar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div style="position: absolute; bottom: 0; margin-left: 23px; margin-bottom: 15px;">
-        <h6 style="font-weight: normal; font-size: 14px;">Sistema desenvolvido por Fulano de Tal em Parceria com a Universidade ABC</h6>
+        <h6 style="font-weight: normal; font-size: 14px;">Sistema desenvolvido por Glaudemir Santos em Parceria com a Universidade ABC</h6>
     </div>
 </template>
 
@@ -57,7 +57,13 @@ export default {
         }
       })
       .catch(error => {
-        console.log("opa", error)
+        if(error.response.status == 401){
+            alert(error.response.data)
+            this.acesso.login = null;
+            this.acesso.senha = null;
+        }else{
+            alert(error.response.data);
+        }
         this.errored = true
       })
       .finally(() => this.loading = false)

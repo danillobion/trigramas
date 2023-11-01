@@ -80,9 +80,12 @@ export default {
             <h6 style="font-size:12.5px">Nº de infecções</h6>
             <h6 style="font-size:12.5px">${data.numero_infeccoes}</h6>
           </div>
-          <button class="btn btn-sm btn-light w-100">Ver perfil</button>
+          <a class="btn btn-sm btn-light w-100" style="color:black" href="/regioes/estados/municipios/pacientes/pessoa/${data.id}">Ver perfil</a>
         </div>
       `;
+    },
+    verPerfil(){
+      console.log("opa");
     }
   },
 };

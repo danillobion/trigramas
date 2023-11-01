@@ -1,13 +1,13 @@
 <template>
     <div class="container mt-3">
         <div class="mt-4 w-100 d-flex">
-            <router-link :to="`/regioes/${$route.params.regiao}/${$route.params.estado}/${$route.params.municipio}`" class="btn btn-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/> </svg></router-link>
-            <h2 style="margin: 0px;">{{ dados.nome}}</h2>
+            <!-- <router-link :to="`/regioes/${$route.params.regiao}/${$route.params.estado}/${$route.params.municipio}`" class="btn btn-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/> </svg></router-link> -->
+            <h2 style="margin-left: 45px;">{{ dados.nome}}</h2>
         </div>
         <span style="margin-left: 44px; color: #9c9c9c;">Regiões/{{ dados.regiao }}/{{ dados.estado }}/{{ dados.municipio }}/{{ dados.nome }}</span>
         <div class="row px-5 mt-3">
             <div class="col-sm-12 col-md-4 mb-1">
-                <div class=" card shadow" style="height: 100%;">
+                <div class=" card shadow" style="height: 100%; background-color: #E8F4FF;">
                     <div class="card-header">
                         <h5 style="margin: 0px;">Geral</h5>
                     </div>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 mb-1">
-                <div class=" card shadow" style="height: 100%;">
+                <div class=" card shadow" style="height: 100%; background-color: #FFE1BF;">
                     <div class="card-header">
                         <h5 style="margin: 0px;">Nível de deficiência</h5>
                     </div>
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 mb-1">
-                <div class=" card shadow" style="height: 100%;">
+                <div class=" card shadow" style="height: 100%; background-color: #E9E9EA;">
                     <div class="card-header">
                         <h5 style="margin: 0px;">Planos de Tratamento</h5>
                     </div>
